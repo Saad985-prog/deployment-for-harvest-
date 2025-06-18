@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+  <title>تصنيف صور Intel</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #ffffff);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 40px;
+    }
+    h2 { color: #00796b; }
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    input[type="file"] {
+      margin-bottom: 15px;
+    }
+    input[type="submit"] {
+      background-color: #00796b;
+      color: white;
+      border: none;
+      padding: 10px 25px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    input[type="submit"]:hover {
+      background-color: #004d40;
+    }
+    h3 { color: #004d40; }
+    img {
+      margin-top: 20px;
+      max-width: 400px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <h2>📷 ارفع صورة لتصنيفها</h2>
+  <form method=post enctype=multipart/form-data>
+    <input type=file name=file required>
+    <br>
+    <input type=submit value="رفع الصورة وتصنيفها">
+  </form>
+  {% if prediction %}
+    <h3>✅ التصنيف: {{ prediction }}</h3>
+    <img src="{{ image_url }}" alt="الصورة المرفوعة">
+  {% endif %}
+</body>
+</html>
