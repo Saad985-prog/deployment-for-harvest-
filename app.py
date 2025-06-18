@@ -24,9 +24,9 @@ def prepare_image(img_path):
 @app.route("/", methods=["GET", "POST"])
 def index():
     prediction = None
-    image_url = None
+    image_path = None
     if request.method == "POST":
-        file = request.files['file']
+        file = request.files['image']  # ✅ تم تعديل الاسم ليتطابق مع HTML
         filename = f"{uuid.uuid4().hex}.jpg"
         filepath = os.path.join("static", filename)
         file.save(filepath)
@@ -34,14 +34,13 @@ def index():
         img = prepare_image(filepath)
         pred = model.predict(img)
         prediction = class_names[np.argmax(pred)]
-        image_url = f"/static/{filename}"
-    return render_template("index.html", prediction=prediction, image_url=image_url)
+        image_path = f"/static/{filename}"
+    return render_template("index.html", prediction=prediction, image_path=image_path)
 
 @app.route("/static/<path:filename>")
 def static_files(filename):
     return send_from_directory("static", filename)
 
 if __name__ == "__main__":
-    import os
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
